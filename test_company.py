@@ -1,10 +1,10 @@
 from datetime import datetime
-from main import Client, Company, Location
+from main import Client, DeliveryCompany, Location
 
 def test_deliver_package():
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
-    AA = Company("aerolineas argentinas")
+    AA = DeliveryCompany("aerolineas argentinas")
     cordoba = Location(name="Cordoba, ARG", lat=-31.4201, long=-64.1888)
     baires = Location(name="Buenos Aires, ARG", lat=-34.6037, long=-58.3816)
 
@@ -24,7 +24,7 @@ def test_deliver_package():
 def test_transaction_report_by_date():
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
-    AA = Company("aerolineas argentinas")
+    AA = DeliveryCompany("aerolineas argentinas")
 
     cordoba = Location(name="Cordoba, ARG", lat=-31.4201, long=-64.1888)
     baires = Location(name="Buenos Aires, ARG", lat=-34.6037, long=-58.3816)
@@ -43,7 +43,7 @@ def test_transaction_report_by_date_no_deliveries():
 
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
-    AA = Company("aerolineas argentinas")
+    AA = DeliveryCompany("aerolineas argentinas")
 
     cordoba = Location(name="Cordoba, ARG", lat=-31.4201, long=-64.1888)
     baires = Location(name="Buenos Aires, ARG", lat=-34.6037, long=-58.3816)
@@ -60,7 +60,7 @@ def test_transaction_report_by_invalid_dates():
 
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
-    AA = Company("aerolineas argentinas")
+    AA = DeliveryCompany("aerolineas argentinas")
 
     cordoba = Location(name="Cordoba, ARG", lat=-31.4201, long=-64.1888)
     baires = Location(name="Buenos Aires, ARG", lat=-34.6037, long=-58.3816)

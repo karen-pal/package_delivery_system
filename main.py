@@ -1,19 +1,6 @@
-"""
-Una compañía Aérea se dedica al negocio de transporte de cargas aéreas entre diferentes orígenes y destinos.
-
-La compañía solo puede transportar paquetes de Clientes.
-
-Por cada paquete transportado la compañía aérea cobra 10$
-
-Debe existir un método que genere un reporte con el total de paquetes transportados y el total recaudado para un día determinado.
-"""
 from dataclasses import dataclass
 from datetime import datetime
 import os
-
-@dataclass
-class Client:
-    name:str
 
 @dataclass
 class Location:
@@ -21,14 +8,18 @@ class Location:
     lat: float
     long: float
 
-class Company:
-    def __init__(self, name):
+@dataclass
+class Client:
+    name:str
+
+class DeliveryCompany:
+    def __init__(self, name:str):
         self.name = name
         self.deliveries = []
         self.clients = []
         self.deliveries_log = {}
 
-    def deliver_package(self, client, source, destination, description):
+    def deliver_package(self, client:Client, source:Location, destination:Location, description:str):
         self.clients.append(client)
         new_delivery = Delivery(source, destination, description, self, client)
         self.deliveries.append(new_delivery)
@@ -54,9 +45,9 @@ class Company:
             print("the value given {} is not a valid date, please use the format %Y-%m-%d".format(date))
             # TODO: raise a custom exception so other devs can catch the mistake
             return ""
+
         if date not in self.deliveries_log.keys():
-            print("There are no deliveries for date {} and company {} ".format(date,self.name))
-            # TODO: Give better formatting
+            print("There are no deliveries for date {} and delivery company {} ".format(date,self.name))
             return ""
         deliveries = self.deliveries_log[date]
 
@@ -67,21 +58,22 @@ class Company:
         for delivery in deliveries["deliveries"]:
             report += str(delivery)
         report+="/---------------/\n\n"
+
+        # display in terminal
         print(report)
-        #print(self.deliveries_log[date])
         directory = os.path.dirname("./reports/") #+date)
         if not os.path.exists(directory):
             os.makedirs(directory)
 
+        # write to disk
         with open(directory+"/"+date+".txt", 'w') as file:
             file.write(report)
 
 
         return self.deliveries_log
 
-
 class Delivery:
-    def __init__(self, source: str, destination: str, description: str, company: Company, client: Client, fee: int = 10, creation_date: datetime = None):
+    def __init__(self, source: Location, destination: Location, description: str, company: DeliveryCompany, client: Client, fee: int = 10, creation_date: datetime = None):
         self.source = source
         self.destination = destination
         self.package_description = description
