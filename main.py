@@ -9,6 +9,7 @@ Debe existir un método que genere un reporte con el total de paquetes transport
 """
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Any
 
 @dataclass
 class Client:
@@ -50,25 +51,43 @@ class Company:
     def transaction_report_by_date(self, *, date):
         if not self.validate_date_format(date):
             print("the value given {} is not a valid date, please use the format %Y-%m-%d".format(date))
+            # TODO: raise a custom exception so other devs can catch the mistake
             return ""
         if date not in self.deliveries_log.keys():
             print("There are no deliveries for date {} and company {} ".format(date,self.name))
+            # TODO: Give better formatting
             return ""
         deliveries = self.deliveries_log[date]
         print("/--- Deliveries report for date : {} ---/".format(date))
         print("Total collected: {}".format(deliveries["total_revenue"]))
-        print("/---------------/")
+        print("Total amount of packages delivered: {}\n".format(len(deliveries["deliveries"])))
+        print("Detailed description\n")
+        for delivery in deliveries["deliveries"]:
+            print(delivery)
+        print("/---------------/\n\n")
         #print(self.deliveries_log[date])
 
         return self.deliveries_log
 
-@dataclass
+
 class Delivery:
-    source: Location
-    destination: Location
-    description: str
-    company: Company
-    client: Client
-    fee: int = 10
-    creation_date: datetime = datetime.today()
-    creation_date_string: str = creation_date.strftime('%Y-%m-%d')
+    def __init__(self, source: str, destination: str, description: str, company: Any, client: Any, fee: int = 10, creation_date: datetime = None):
+        self.source = source
+        self.destination = destination
+        self.description = description
+        self.company = company
+        self.client = client
+        self.fee = fee
+        self.creation_date = datetime.today()
+        self.creation_date_string = self.creation_date.strftime('%Y-%m-%d')
+
+    def __repr__(self) -> str:
+        return (f"Delivery with "
+                f"source: {self.source}, and "
+                f"destination: {self.destination}.\n\n "
+                f"Provided description:'{self.description}'\n "
+                f"Delivered by company={self.company}, "
+                f"For client={self.client}.\n\n "
+                f"Associated delivery fee={self.fee}, "
+                f"creation_date={self.creation_date}, "
+                f"creation_date_string='{self.creation_date_string}')")
