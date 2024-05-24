@@ -18,7 +18,8 @@ class Client:
 @dataclass
 class Location:
     name: str
-    geo_coordinates: str
+    lat: float
+    long: float
 
 class Company:
     def __init__(self, name):
@@ -71,7 +72,7 @@ class Company:
 
 
 class Delivery:
-    def __init__(self, source: str, destination: str, description: str, company: Any, client: Any, fee: int = 10, creation_date: datetime = None):
+    def __init__(self, source: str, destination: str, description: str, company: Company, client: Client, fee: int = 10, creation_date: datetime = None):
         self.source = source
         self.destination = destination
         self.description = description
