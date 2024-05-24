@@ -61,14 +61,18 @@ class DeliveryCompany:
 
         # display in terminal
         print(report)
-        directory = os.path.dirname("./reports/") #+date)
+
+        # write to disk
+        directory = os.path.dirname("./reports")
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        # write to disk
-        with open(directory+"/"+date+".txt", 'w') as file:
-            file.write(report)
-
+        file_path = os.path.join(directory, f"{date}.txt")
+        try:
+            with open(file_path, 'w') as file:
+                file.write(report)
+        except IOError as e:
+            print(f"Failed to write report to {file_path}: {e}")
 
         return self.deliveries_log
 
