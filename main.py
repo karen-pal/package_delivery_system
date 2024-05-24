@@ -24,21 +24,36 @@ class Company:
         self.name = name
         self.deliveries = []
         self.clients = []
-        self.transactions_log = {}
+        self.deliveries_log = {}
 
     def deliver_package(self, client, source, destination, description):
         self.clients.append(client)
         new_delivery = Delivery(source, destination, description, self, client)
         self.deliveries.append(new_delivery)
         
-        if new_delivery.creation_date_string in self.transactions_log.keys():
-            self.transactions_log[new_delivery.creation_date_string] += new_delivery.fee
+        if new_delivery.creation_date_string in self.deliveries_log.keys():
+            self.deliveries_log[new_delivery.creation_date_string] += new_delivery.fee
         else:
-            self.transactions_log[new_delivery.creation_date_string] = new_delivery.fee
+            self.deliveries_log[new_delivery.creation_date_string] = new_delivery.fee
 
-    def transaction_report_by_date(self):
-        print(self.transactions_log)
-        return self.transactions_log
+    @staticmethod
+    def validate_date_format(date_str):
+        try:
+            datetime.strptime(date_str, '%Y-%m-%d')
+            return True
+        except ValueError:
+            return False
+
+    def transaction_report_by_date(self, *, date):
+        if not self.validate_date_format(date):
+            print("the value given {} is not a valid date, please use the format %Y-%m-%d".format(date))
+            return ""
+        if date not in self.deliveries_log.keys():
+            print("There are no deliveries for date {} and company {} ".format(date,self.name))
+            return ""
+        print(self.deliveries_log[date])
+
+        return self.deliveries_log
 
 @dataclass
 class Delivery:
@@ -50,14 +65,3 @@ class Delivery:
     fee: int = 10
     creation_date: datetime = datetime.today()
     creation_date_string: str = creation_date.strftime('%Y-%m-%d')
-
-
-farmacia = Client("farmacia Lider")
-AA = Company("aerolineas argentinas")
-
-AA.deliver_package(farmacia, "cordoba", "baires", "sertales")
-AA.deliver_package(farmacia, "cordoba", "baires", "actron")
-AA.deliver_package(farmacia, "cordoba", "corrientes", "actron")
-AA.transaction_report_by_date()
-
-
