@@ -84,7 +84,7 @@ class Delivery:
     def __init__(self, source: str, destination: str, description: str, company: Company, client: Client, fee: int = 10, creation_date: datetime = None):
         self.source = source
         self.destination = destination
-        self.description = description
+        self.package_description = description
         self.company = company
         self.client = client
         self.fee = fee
@@ -95,7 +95,7 @@ class Delivery:
         return (f"● Delivery with "
                 f"source: {self.source}, and "
                 f"destination: {self.destination}.\n\n "
-                f"Provided description:'{self.description}'\n "
+                f"Provided description:'{self.package_description}'\n "
                 f"Delivered by company: {self.company.name}, "
                 f"For client: {self.client.name}.\n\n "
                 f"Associated delivery fee={self.fee}, "
