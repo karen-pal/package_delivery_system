@@ -84,7 +84,7 @@ class Delivery:
         self.company = company
         self.client = client
         self.fee = fee
-        self.creation_date = datetime.today()
+        self.creation_date = creation_date or datetime.today()
         self.creation_date_string = self.creation_date.strftime('%Y-%m-%d')
 
     def __repr__(self) -> str:
