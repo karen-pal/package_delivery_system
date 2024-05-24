@@ -32,9 +32,12 @@ class Company:
         self.deliveries.append(new_delivery)
         
         if new_delivery.creation_date_string in self.deliveries_log.keys():
-            self.deliveries_log[new_delivery.creation_date_string] += new_delivery.fee
+            self.deliveries_log[new_delivery.creation_date_string]["total_revenue"] += new_delivery.fee
+            self.deliveries_log[new_delivery.creation_date_string]["deliveries"].append(new_delivery)
         else:
-            self.deliveries_log[new_delivery.creation_date_string] = new_delivery.fee
+
+            self.deliveries_log[new_delivery.creation_date_string] = {"total_revenue": new_delivery.fee, "deliveries": [new_delivery]}
+        return new_delivery
 
     @staticmethod
     def validate_date_format(date_str):
@@ -53,7 +56,7 @@ class Company:
             return ""
         deliveries = self.deliveries_log[date]
         print("/--- Deliveries report for date : {} ---/".format(date))
-        print("Total collected: {}".format(deliveries))
+        print("Total collected: {}".format(deliveries["total_revenue"]))
         print("/---------------/")
         #print(self.deliveries_log[date])
 

@@ -7,15 +7,17 @@ def test_deliver_package():
     AA = Company("aerolineas argentinas")
 
     # Deliver a package from A to B
-    AA.deliver_package(farmacia, "cordoba", "baires", "sertal")
+    delivery_a = AA.deliver_package(farmacia, "cordoba", "baires", "sertal")
     assert len(AA.deliveries) == 1
     assert len(AA.clients) == 1
-    assert AA.deliveries_log == {'{}'.format(datetime.today().strftime('%Y-%m-%d')): 10}
+    assert AA.deliveries_log[datetime.today().strftime('%Y-%m-%d')]["total_revenue"] == 10
+    assert AA.deliveries_log[datetime.today().strftime('%Y-%m-%d')]["deliveries"] == [delivery_a]
 
     # Deliver another package from A to B
-    AA.deliver_package(farmacia, "cordoba", "baires", "actron")
+    delivery_b = AA.deliver_package(farmacia, "cordoba", "baires", "actron")
     assert len(AA.deliveries) == 2
-    assert AA.deliveries_log == {'{}'.format(datetime.today().strftime('%Y-%m-%d')): 20}
+    assert AA.deliveries_log[datetime.today().strftime('%Y-%m-%d')]["total_revenue"] == 20
+    assert AA.deliveries_log[datetime.today().strftime('%Y-%m-%d')]["deliveries"] == [delivery_a, delivery_b]
 
 def test_transaction_report_by_date():
     # Create a test Client and Company
@@ -30,7 +32,7 @@ def test_transaction_report_by_date():
     assert isinstance(report, dict)
     assert len(report) == 1
     assert '{}'.format(datetime.today().strftime('%Y-%m-%d')) in report
-    assert report['{}'.format(datetime.today().strftime('%Y-%m-%d'))] == 20
+    assert report['{}'.format(datetime.today().strftime('%Y-%m-%d'))]["total_revenue"] == 20
 
 def test_transaction_report_by_date_no_deliveries():
     # Date with no deliveries
