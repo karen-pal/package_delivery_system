@@ -51,7 +51,11 @@ class Company:
         if date not in self.deliveries_log.keys():
             print("There are no deliveries for date {} and company {} ".format(date,self.name))
             return ""
-        print(self.deliveries_log[date])
+        deliveries = self.deliveries_log[date]
+        print("/--- Deliveries report for date : {} ---/".format(date))
+        print("Total collected: {}".format(deliveries))
+        print("/---------------/")
+        #print(self.deliveries_log[date])
 
         return self.deliveries_log
 
