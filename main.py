@@ -21,7 +21,7 @@ class DeliveryCompany:
 
     def deliver_package(self, client:Client, source:Location, destination:Location, description:str):
         self.clients.append(client)
-        new_delivery = Delivery(source, destination, description, self, client)
+        new_delivery = Delivery(source=source, destination=destination, description=description, company=self, client=client)
         self.deliveries.append(new_delivery)
         
         if new_delivery.creation_date_string in self.deliveries_log.keys():
@@ -73,7 +73,7 @@ class DeliveryCompany:
         return self.deliveries_log
 
 class Delivery:
-    def __init__(self, source: Location, destination: Location, description: str, company: DeliveryCompany, client: Client, fee: int = 10, creation_date: datetime = None):
+    def __init__(self, *, source: Location, destination: Location, description: str, company: DeliveryCompany, client: Client, fee: int = 10, creation_date: datetime = None):
         self.source = source
         self.destination = destination
         self.package_description = description
