@@ -63,11 +63,11 @@ class DeliveryCompany:
         print(report)
 
         # write to disk
-        directory = os.path.dirname("./reports")
+        directory ="./reports"
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        file_path = os.path.join(directory, f"{date}.txt")
+        file_path = directory+"/"+date+".txt"
         try:
             with open(file_path, 'w') as file:
                 file.write(report)

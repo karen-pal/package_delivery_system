@@ -13,6 +13,7 @@ Code to implement the system described as follows:
 
 Using python and pytest.
 
+<img src="diagram.png">
 
 # Dependencies
 `pip install pytest`
