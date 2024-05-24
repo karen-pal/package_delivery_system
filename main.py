@@ -9,7 +9,7 @@ Debe existir un método que genere un reporte con el total de paquetes transport
 """
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any
+import os
 
 @dataclass
 class Client:
@@ -59,14 +59,23 @@ class Company:
             # TODO: Give better formatting
             return ""
         deliveries = self.deliveries_log[date]
-        print("/--- Deliveries report for date : {} ---/".format(date))
-        print("Total collected: {}".format(deliveries["total_revenue"]))
-        print("Total amount of packages delivered: {}\n".format(len(deliveries["deliveries"])))
-        print("Detailed description\n")
+
+        report = "/--- Deliveries report for date : {} ---/\n".format(date)
+        report += "Total collected: {}\n".format(deliveries["total_revenue"])
+        report += "Total amount of packages delivered: {}\n".format(len(deliveries["deliveries"]))
+        report += "Detailed description\n"
         for delivery in deliveries["deliveries"]:
-            print(delivery)
-        print("/---------------/\n\n")
+            report += str(delivery)
+        report+="/---------------/\n\n"
+        print(report)
         #print(self.deliveries_log[date])
+        directory = os.path.dirname("./reports/") #+date)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        with open(directory+"/"+date+".txt", 'w') as file:
+            file.write(report)
+
 
         return self.deliveries_log
 
@@ -83,12 +92,12 @@ class Delivery:
         self.creation_date_string = self.creation_date.strftime('%Y-%m-%d')
 
     def __repr__(self) -> str:
-        return (f"Delivery with "
+        return (f"● Delivery with "
                 f"source: {self.source}, and "
                 f"destination: {self.destination}.\n\n "
                 f"Provided description:'{self.description}'\n "
-                f"Delivered by company={self.company}, "
-                f"For client={self.client}.\n\n "
+                f"Delivered by company: {self.company.name}, "
+                f"For client: {self.client.name}.\n\n "
                 f"Associated delivery fee={self.fee}, "
                 f"creation_date={self.creation_date}, "
                 f"creation_date_string='{self.creation_date_string}')")
