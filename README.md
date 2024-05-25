@@ -11,7 +11,28 @@ Code to implement the system described as follows:
 > Debe existir un método que genere un reporte con el total de paquetes transportados y el total recaudado para un día determinado.
 
 
-Using python and pytest.
+## Technical description
+
+### Stack description
+In order to implement the hypothetical aerial delivery system, Python 3.10 was used. 
+
+Pytest was used for writing test cases, and Black was used to format the python files according to the PEP 8 standard.
+
+Micromamba was used as the package manager in order to install these packages.
+
+### Workflow Description
+#### Deliver a package
+In order to deliver a package an instance of DeliveryCompany has to call its method deliver_package with the following arguments: an instantiated Delivery, Client, and two Locations (a source Location and a destination).
+
+By default the delivery is logged as it happened the moment the method was executed, but you can pass a creation_date datetime object to be used instead.
+
+#### Make a report by date
+In order to make a report an instance of DeliveryCompany has to call its method report_by_date with a date in the format %Y-%m-%d ("2023-05-24" for example) as an argument. 
+
+The report is saved under the reports directory.
+
+> Example usages can be seen in the test file.
+
 
 <img src="diag.png">
 
@@ -27,4 +48,4 @@ or, to see logs in terminal:
 
 `pytest test_main.py --capture=no`
 
-> In both cases the report created can be seen in reports subfolder
+> In both cases the report created can be seen in reports directory.
