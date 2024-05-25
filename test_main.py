@@ -32,14 +32,13 @@ def test_transaction_report_by_date():
     AA.deliver_package(farmacia, cordoba, baires, "sertales")
     AA.deliver_package(farmacia, cordoba, baires, "actron")
 
-    report = AA.transaction_report_by_date(date= datetime.today().strftime('%Y-%m-%d'))
+    report = AA.report_by_date(date= datetime.today().strftime('%Y-%m-%d'))
     assert isinstance(report, dict)
     assert len(report) == 1
     assert '{}'.format(datetime.today().strftime('%Y-%m-%d')) in report
     assert report['{}'.format(datetime.today().strftime('%Y-%m-%d'))]["total_revenue"] == 20
 
 def test_transaction_report_by_date_no_deliveries():
-    # Date with no deliveries
 
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
@@ -51,12 +50,11 @@ def test_transaction_report_by_date_no_deliveries():
     AA.deliver_package(farmacia, cordoba, baires, "sertales")
     AA.deliver_package(farmacia, cordoba, baires, "actron")
 
-    report = AA.transaction_report_by_date(date='2023-05-24')
+    # Date with no deliveries
+    report = AA.report_by_date(date='2023-05-24')
     assert report == ""
 
 def test_transaction_report_by_invalid_date_format():
-    # Invalid date format
-
     # Create a test Client and Company
     farmacia = Client("farmacia Lider")
     AA = DeliveryCompany("aerolineas argentinas")
@@ -67,5 +65,6 @@ def test_transaction_report_by_invalid_date_format():
     AA.deliver_package(farmacia, cordoba, baires, "sertales")
     AA.deliver_package(farmacia, cordoba, baires, "actron")
 
-    report = AA.transaction_report_by_date(date='2023/05/24')
+    # Invalid date format
+    report = AA.report_by_date(date='2023/05/24')
     assert report == ""
