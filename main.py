@@ -83,6 +83,7 @@ class DeliveryCompany:
         report += "Detailed description\n"
         for delivery in deliveries["deliveries"]:
             report += str(delivery)
+        report += "\n"
         report += "/---------------/\n\n"
 
         # display in terminal

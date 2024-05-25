@@ -18,7 +18,7 @@ In order to implement the hypothetical aerial delivery system, Python 3.10 was u
 
 Pytest was used for writing test cases, and Black was used to format the python files according to the PEP 8 standard.
 
-Micromamba was used as the package manager in order to install these packages.
+Micromamba was used as the package manager in order to install those packages.
 
 ### Workflow Description
 #### Deliver a package
@@ -35,6 +35,27 @@ The report is saved under the reports directory.
 
 
 <img src="diag.png">
+
+### Example Report
+```
+/--- Deliveries report for date : 2024-05-25 ---/
+Total collected: 20
+Total amount of packages delivered: 2
+Detailed description
+● Delivery with source: Location(name='Cordoba, ARG', lat=-31.4201, long=-64.1888), and destination: Location(name='Buenos Aires, ARG', lat=-34.6037, long=-58.3816).
+
+ Provided description:'sertales'
+ Delivered by company: aerolineas argentinas, For client: farmacia Lider.
+
+ Associated delivery fee=10, creation_date=2024-05-25 11:06:53.296906, creation_date_string='2024-05-25')● Delivery with source: Location(name='Cordoba, ARG', lat=-31.4201, long=-64.1888), and destination: Location(name='Buenos Aires, ARG', lat=-34.6037, long=-58.3816).
+
+ Provided description:'actron'
+ Delivered by company: aerolineas argentinas, For client: farmacia Lider.
+
+ Associated delivery fee=10, creation_date=2024-05-25 11:06:53.296917, creation_date_string='2024-05-25')
+ /---------------/
+```
+
 
 # Dependencies
 `pip install pytest`
