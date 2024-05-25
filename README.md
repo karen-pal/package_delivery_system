@@ -20,5 +20,11 @@ Using python and pytest.
 
 
 ## Run tests
-`pytest test_company.py`
 
+`pytest test_main.py`
+
+or, to see logs in terminal:
+
+`pytest test_main.py --capture=no`
+
+> In both cases the report created can be seen in reports subfolder
