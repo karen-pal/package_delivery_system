@@ -28,7 +28,6 @@ class DeliveryCompany:
             self.deliveries_log[new_delivery.creation_date_string]["total_revenue"] += new_delivery.fee
             self.deliveries_log[new_delivery.creation_date_string]["deliveries"].append(new_delivery)
         else:
-
             self.deliveries_log[new_delivery.creation_date_string] = {"total_revenue": new_delivery.fee, "deliveries": [new_delivery]}
         return new_delivery
 
@@ -40,10 +39,9 @@ class DeliveryCompany:
         except ValueError:
             return False
 
-    def transaction_report_by_date(self, *, date):
+    def report_by_date(self, *, date):
         if not self.validate_date_format(date):
-            print("the value given {} is not a valid date, please use the format %Y-%m-%d".format(date))
-            # TODO: raise a custom exception so other devs can catch the mistake
+            print("ERROR: The value given {} is not a valid date, please use the format %Y-%m-%d".format(date))
             return ""
 
         if date not in self.deliveries_log.keys():
